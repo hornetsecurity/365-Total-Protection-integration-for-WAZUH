@@ -1,0 +1,10 @@
+{
+  "inputs": [
+    {
+      "name": "production-domain",
+      "enabled": true,
+      "scope": "example.com",
+      "direction": "inbound_outbound"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+<!-- Custom rules for Hornetsecurity by Proofpoint 365 Total Protection JSON events. -->
+<group name="hornetsecurity, email,">
+  <rule id="100500" level="3">
+    <decoded_as>json</decoded_as>
+    <field name="integration" type="pcre2">^(hornetsecurity_365_total_protection|hornetsecurity_by_proofpoint_365_total_protection_wazuh)$</field>
+    <description>Hornetsecurity by Proofpoint 365 Total Protection for Wazuh: email event for $(to)</description>
+    <group>hornetsecurity_email,</group>
+  </rule>
+
+  <rule id="100501" level="10">
+    <if_sid>100500</if_sid>
+    <field name="classification" type="pcre2">(?i)(malware|phishing|virus|ransomware|trojan|spyware|threat|advthreat)</field>
+    <description>Hornetsecurity by Proofpoint 365 Total Protection for Wazuh detected a potentially malicious email ($(classification)) for $(to)</description>
+    <group>hornetsecurity_threat, email_threat,</group>
+  </rule>
+
+  <rule id="100502" level="7">
+    <if_sid>100500</if_sid>
+    <field name="remediation_action" type="pcre2">(?i)(block|reject|quarantine|delete|remediat)</field>
+    <description>Hornetsecurity by Proofpoint 365 Total Protection for Wazuh remediated an email for $(to): $(remediation_action)</description>
+    <group>hornetsecurity_remediation,</group>
+  </rule>
+
+  <rule id="100503" level="5">
+    <if_sid>100500</if_sid>
+    <field name="classification" type="pcre2">(?i)(spam|bulk|graymail)</field>
+    <description>Hornetsecurity by Proofpoint 365 Total Protection for Wazuh classified an email as $(classification) for $(to)</description>
+    <group>hornetsecurity_spam,</group>
+  </rule>
+</group>
